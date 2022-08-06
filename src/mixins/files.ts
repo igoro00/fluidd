@@ -66,13 +66,13 @@ export default class FilesMixin extends Vue {
    * @param filename The filename to retrieve
    * @param path The path to the file
    */
-  async getFile (filename: string, path: string, size = 0, options?: AxiosRequestConfig) {
+  async getFile (filename: string, path: string, size = 0, options?: AxiosRequestConfig, quiet = false) {
     // Sort out the filepath
     const filepath = (path) ? `${path}/${filename}` : `${filename}`
 
     // Add an entry to vuex indicating we're downloading a file.
     const startTime = performance.now()
-    this.$store.dispatch('files/updateFileDownload', {
+    !quiet && this.$store.dispatch('files/updateFileDownload', {
       // starttime: performance.now(),
       filepath,
       size,
@@ -110,7 +110,7 @@ export default class FilesMixin extends Vue {
           size = payload.size = progressEvent.total
         }
 
-        this.$store.dispatch('files/updateFileDownload', payload)
+        !quiet && this.$store.dispatch('files/updateFileDownload', payload)
       }
     }
 
@@ -158,7 +158,7 @@ export default class FilesMixin extends Vue {
    * @param andPrint If we should attempt to print this file or not.
    * @param options Axios request options
    */
-  async uploadFile (file: File, path: string, root: string, andPrint: boolean, options?: AxiosRequestConfig) {
+  async uploadFile (file: File, path: string, root: string, andPrint: boolean, options?: AxiosRequestConfig, quiet = false) {
     const formData = new FormData()
     // let filename = file.name.replace(' ', '_')
     let filepath = `${path}/${file.name}`
@@ -172,7 +172,7 @@ export default class FilesMixin extends Vue {
     }
 
     const startTime = performance.now()
-    this.$store.dispatch('files/updateFileUpload', {
+    !quiet && this.$store.dispatch('files/updateFileUpload', {
       filepath,
       size: file.size,
       loaded: 0,
@@ -202,7 +202,7 @@ export default class FilesMixin extends Vue {
                 i = Math.min(2, i + 1)
               }
             }
-            this.$store.dispatch('files/updateFileUpload', {
+            !quiet && this.$store.dispatch('files/updateFileUpload', {
               filepath,
               loaded: progressEvent.loaded,
               percent: Math.round(progressEvent.loaded / progressEvent.total * 100),
@@ -219,7 +219,7 @@ export default class FilesMixin extends Vue {
         return e
       })
       .finally(() => {
-        this.$store.dispatch('files/removeFileUpload', filepath)
+        !quiet && this.$store.dispatch('files/removeFileUpload', filepath)
       })
   }
 

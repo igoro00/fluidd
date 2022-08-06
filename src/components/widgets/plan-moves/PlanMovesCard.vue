@@ -1,25 +1,25 @@
 <template>
   <collapsable-card
-    :title="$t('app.general.title.limits')"
+    :title="$t('app.general.title.plan_moves')"
     icon="$limits"
     :draggable="true"
     layout-path="dashboard.plan-moves-card"
   >
-    <printer-limits />
+    <plan-moves />
   </collapsable-card>
 </template>
 
 <script lang="ts">
 import { Component, Mixins, Prop } from 'vue-property-decorator'
-import PrinterLimits from '@/components/widgets/limits/PrinterLimits.vue'
+import PlanMoves from '@/components/widgets/plan-moves/PlanMoves.vue'
 import StateMixin from '@/mixins/state'
 
 @Component({
   components: {
-    PrinterLimits
+    PlanMoves
   }
 })
-export default class PrinterLimitsCard extends Mixins(StateMixin) {
+export default class PlanMovesCard extends Mixins(StateMixin) {
   @Prop({ type: Boolean, default: true })
   public enabled!: boolean
 

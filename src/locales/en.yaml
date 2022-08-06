@@ -362,6 +362,7 @@ app:
       timelapse: Timelapse
       tool: Tool
       tune: Tune
+      plan_moves: Plan Moves
     tooltip:
       estop: Emergency Stop
       notifications: Notifications

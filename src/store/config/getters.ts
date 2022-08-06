@@ -141,5 +141,13 @@ export const getters: GetterTree<ConfigState, RootState> = {
 
   getConfiguredTableHeaders: (state) => (key: string) => {
     return state.uiSettings.tableHeaders[key]
+  },
+
+  getPlannerFile: (state) => {
+    return state.uiSettings.planner.currentFilename
+  },
+
+  getPlannerTmp: (state) => {
+    return state.uiSettings.planner.tmpGcode
   }
 }
