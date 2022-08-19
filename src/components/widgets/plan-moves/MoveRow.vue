@@ -1,19 +1,16 @@
 <template>
-  <v-row
-    :align="'center'"
-  >
-    <v-col
-      cols="7"
-    >
+  <v-row>
+    <v-col cols="6">
       <v-text-field
         v-model="move"
         hide-details
         outlined
         dense
         :label="i.toString()"
+        @change="handleGcodeChange"
       />
     </v-col>
-    <v-col cols="2">
+    <v-col>
       <app-btn
         :disabled="move==''"
         block
@@ -22,13 +19,36 @@
         Run
       </app-btn>
     </v-col>
-    <v-col cols="3">
+    <v-col>
       <app-btn
         :disabled="!klippyReady || !allHomed || printerPrinting"
         block
         @click="handleGetPos()"
       >
-        Current Pos.
+        Pos.
+      </app-btn>
+    </v-col>
+    <v-col>
+      <app-btn
+        block
+        color="primary"
+        @click="addRowAbove(i)"
+      >
+        +
+      </app-btn>
+    </v-col>
+    <v-col>
+      <app-btn
+        block
+        color="error"
+        @click="setMove(undefined, i)"
+      >
+        <v-icon
+          :small="true"
+          color="white"
+        >
+          $delete
+        </v-icon>
       </app-btn>
     </v-col>
   </v-row>
@@ -55,7 +75,10 @@ export default class MoveRow extends Mixins(StateMixin, ToolheadMixin) {
   public i!: number
 
   @Prop()
-  public setMove!: (gcode: string, i:number)=>void
+  public setMove!: (gcode: string|undefined, i:number)=>void
+
+  @Prop()
+  public addRowAbove!: (i:number)=>void
 
   get gcodePosition () {
     return this.$store.state.printer.printer.gcode_move.gcode_position
@@ -64,11 +87,10 @@ export default class MoveRow extends Mixins(StateMixin, ToolheadMixin) {
   handleGetPos () {
     this.setMove(`G1 X${this.gcodePosition[0]} Y${this.gcodePosition[1]} Z${this.gcodePosition[2]} F6000`, this.i)
   }
+
+  handleGcodeChange (value:string) {
+    this.setMove(value, this.i)
+  }
 }
 
 </script>
-<style type="scss" scoped>
-  /* .move-row{
-    padding:8px;
-  } */
-</style>

@@ -158,7 +158,7 @@ export const actions: ActionTree<ConfigState, RootState> = {
   },
 
   async updatePlannerTmp ({ commit, state }, payload:string[]) {
-    payload = payload.filter(elem => elem !== '')
+    payload = payload.filter(elem => elem !== undefined)
     commit('setPlannerTmp', payload)
     SocketActions.serverWrite('uiSettings.planner.tmpGcode', state.uiSettings.planner.tmpGcode)
   }

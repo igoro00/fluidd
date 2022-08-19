@@ -1,7 +1,7 @@
 <template>
   <v-card-text>
     <v-row>
-      <v-col cols="9">
+      <v-col cols="6">
         <v-text-field
           v-model="filename"
           hide-details
@@ -12,7 +12,7 @@
         />
       </v-col>
       <v-col
-        cols="3"
+        cols="2"
       >
         <app-btn
           :elevation="2"
@@ -23,7 +23,7 @@
         </app-btn>
       </v-col>
       <v-col
-        cols="3"
+        cols="2"
       >
         <app-btn
           :elevation="2"
@@ -34,13 +34,24 @@
         </app-btn>
       </v-col>
       <v-col
-        cols="3"
+        cols="2"
+      >
+        <app-btn
+          :elevation="2"
+          block
+          @click="filename='';moves=[]"
+        >
+          Clear
+        </app-btn>
+      </v-col>
+      <v-col
+        cols="12"
       >
         <app-btn
           block
           @click="sendGcode(moves.join('\n'))"
         >
-          Run
+          Run All
         </app-btn>
       </v-col>
     </v-row>
@@ -57,6 +68,7 @@
         :i="i"
         :move="move"
         :set-move="setMove"
+        :add-row-above="addRowAbove"
       />
       <v-col
         cols="12"
@@ -65,7 +77,7 @@
         <app-btn
           :elevation="2"
           block
-          @click="moves.push('')"
+          @click="setMove('',moves.length)"
         >
           Add row
         </app-btn>
@@ -91,7 +103,7 @@ export default class PlanMoves extends Mixins(StateMixin, ToolheadMixin, FilesMi
   @Prop({ type: Boolean, default: false })
   public forceMove!: boolean
 
-  get moves ():string[] {
+  get moves ():Array<string|undefined> {
     return this.$store.getters['config/getPlannerTmp']
   }
 
@@ -99,9 +111,16 @@ export default class PlanMoves extends Mixins(StateMixin, ToolheadMixin, FilesMi
     this.$store.dispatch('config/updatePlannerTmp', m)
   }
 
-  setMove (move:string, i:number) {
+  setMove (move:string|undefined, i:number) {
     const tmp = this.moves
     tmp[i] = move
+    this.moves = tmp
+    this.updateGcodeList++
+  }
+
+  addRowAbove (i:number) {
+    const tmp = this.moves
+    tmp.splice(i, 0, '')
     this.moves = tmp
     this.updateGcodeList++
   }
@@ -150,7 +169,8 @@ export default class PlanMoves extends Mixins(StateMixin, ToolheadMixin, FilesMi
 
   saveFile (filename: string) {
     (async () => {
-      const file = await this.getFile(filename, 'gcodes', undefined, undefined, true)
+      const file = new File([this.moves.join('\n')], filename)
+      await this.uploadFile(file, '', 'gcodes', false, undefined, false)
     })()
   }
 }
