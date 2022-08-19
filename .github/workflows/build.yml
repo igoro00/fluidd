@@ -38,11 +38,14 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           cp ./server/config.json ./dist/config.json
-
-      - name: Deploy to Host
-        if: github.ref == 'refs/heads/develop'
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          npm run deploy:host:dev
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v1'
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: './'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
