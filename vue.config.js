@@ -10,7 +10,6 @@ const h = require('child_process')
   .toString()
 
 module.exports = defineConfig({
-  publicPath: '/fluidd',
   pluginOptions: {
     i18n: {
       locale: 'en',

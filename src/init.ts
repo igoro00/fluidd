@@ -18,7 +18,7 @@ import router from './router'
  */
 
 const getHostConfig = async (): Promise<HostConfig> => {
-  const hostConfigResponse = await httpClient.get('/fluidd/config.json?date=' + new Date().getTime())
+  const hostConfigResponse = await httpClient.get('/config.json?date=' + new Date().getTime())
   if (hostConfigResponse && hostConfigResponse.data) {
     consola.debug('Loaded web host configuration', hostConfigResponse.data)
     return hostConfigResponse.data
