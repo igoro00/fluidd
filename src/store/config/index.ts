@@ -133,6 +133,10 @@ export const defaultState = (): ConfigState => {
           vertical: true
         }
       },
+      planner: {
+        currentFilename: '',
+        tmpGcode: []
+      },
       fileSystem: {
         activeFilters: {
           gcodes: [],

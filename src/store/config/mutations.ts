@@ -191,5 +191,19 @@ export const mutations: MutationTree<ConfigState> = {
         headers.push(o)
       }
     }
+  },
+
+  /**
+   * Set filename of move planner
+   */
+  setPlannerFile (state, payload:string) {
+    Vue.set(state.uiSettings.planner, 'currentFilename', payload)
+  },
+
+  /**
+   * Set temp gcode of move planner
+   */
+  setPlannerTmp (state, payload:string[]) {
+    Vue.set(state.uiSettings.planner, 'tmpGcode', payload)
   }
 }

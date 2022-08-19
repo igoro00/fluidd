@@ -150,5 +150,17 @@ export const actions: ActionTree<ConfigState, RootState> = {
     if (state.uiSettings.tableHeaders[payload.name]) {
       SocketActions.serverWrite(`uiSettings.tableHeaders.${payload.name}`, state.uiSettings.tableHeaders[payload.name])
     }
+  },
+
+  async updatePlannerFile ({ commit, state }, payload) {
+    commit('setPlannerFile', payload)
+    SocketActions.serverWrite('uiSettings.planner.currentFilename', state.uiSettings.planner.currentFilename)
+  },
+
+  async updatePlannerTmp ({ commit, state }, payload:string[]) {
+    payload = payload.filter(elem => elem !== undefined)
+    commit('setPlannerTmp', payload)
+    SocketActions.serverWrite('uiSettings.planner.tmpGcode', state.uiSettings.planner.tmpGcode)
   }
+
 }

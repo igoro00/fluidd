@@ -20,6 +20,12 @@ export interface UiSettings {
   tableHeaders: AppTableConfiguredHeaders;
   gcodePreview: GcodePreviewConfig;
   fileSystem: FileSystemConfig;
+  planner: PlannerConfig
+}
+
+export interface PlannerConfig {
+  currentFilename: string;
+  tmpGcode: string[];
 }
 
 export interface HostConfig {

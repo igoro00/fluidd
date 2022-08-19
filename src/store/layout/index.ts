@@ -23,6 +23,7 @@ export const defaultState = (): LayoutState => {
           { id: 'macros-card', enabled: true, collapsed: false },
           { id: 'outputs-card', enabled: true, collapsed: false },
           { id: 'printer-limits-card', enabled: true, collapsed: false },
+          { id: 'plan-moves-card', enabled: true, collapsed: false },
           { id: 'retract-card', enabled: true, collapsed: false }
         ],
         container2: [

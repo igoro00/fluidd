@@ -51,6 +51,7 @@ import ConsoleCard from '@/components/widgets/console/ConsoleCard.vue'
 import OutputsCard from '@/components/widgets/outputs/OutputsCard.vue'
 import PrinterLimitsCard from '@/components/widgets/limits/PrinterLimitsCard.vue'
 import RetractCard from '@/components/widgets/retract/RetractCard.vue'
+import PlanMovesCard from '@/components/widgets/plan-moves/PlanMovesCard.vue'
 import { LayoutConfig } from '@/store/layout/types'
 import BedMeshCard from '@/components/widgets/bedmesh/BedMeshCard.vue'
 import GcodePreviewCard from '@/components/widgets/gcode-preview/GcodePreviewCard.vue'
@@ -69,8 +70,9 @@ import { Macro } from '@/store/macros/types'
     RetractCard,
     ConsoleCard,
     OutputsCard,
-    BedMeshCard,
-    GcodePreviewCard
+    GcodePreviewCard,
+    PlanMovesCard,
+    BedMeshCard
   }
 })
 export default class Dashboard extends Mixins(StateMixin) {
