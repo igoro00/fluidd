@@ -68,6 +68,8 @@ export const defaultState = (): ConfigState => {
         flipConsoleLayout: false,
         cameraFullscreenAction: 'embed',
         topNavPowerToggle: null,
+        showManualProbeDialogAutomatically: true,
+        showBedScrewsAdjustDialogAutomatically: true,
         forceMoveToggleWarning: true
       },
       theme: {
@@ -134,6 +136,12 @@ export const defaultState = (): ConfigState => {
       planner: {
         currentFilename: '',
         tmpGcode: []
+      },
+      fileSystem: {
+        activeFilters: {
+          gcodes: [],
+          config: []
+        }
       }
     }
   }
